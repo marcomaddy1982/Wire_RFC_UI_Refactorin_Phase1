@@ -18,24 +18,24 @@
 
 ## Introduction
 
-At the top of the hierarchy in the [dependencies graph](https://github.com/wireapp/wire-ios/wiki) of the iOS application there is the **wire-ios** layer, which represents the user interface layer of the app. At the time when the UI layer started to be implemented the **Model-View-Controller** pattern (also known as *Massive-View-Controller*) was a widely used design pattern for architecting software applications. In fact Cocoa applications were centered around **MVC** and many of Apple's frameworks are impregnated by the pattern.
+At the top of the hierarchy in the [dependencies graph](https://github.com/wireapp/wire-ios/wiki) of the iOS application there is the **wire-ios** layer, which represents the user interface layer of the app. At the time when the UI layer started to be implemented the **Model-View-Controller** pattern (also known as `Massive-View-Controller`) was a widely used design pattern for architecting software applications. In fact Cocoa applications were centered around **MVC** and many of Apple's frameworks are impregnated by the pattern.
 
 - **Model** is where your data resides. Things like persistence, model objects, parsers, managers, and networking code live there.
 - **Views** presents data to the user and handles user interaction. It only knows how to present data to the user and it doesn't know or understand what it's presenting.
-- **Controller** controls all logic that goes between the *View* and the *Model*. It transports messages between the *View* and the *Model*, and vice versa.
+- **Controller** controls all logic that goes between the `View` and the `Model`. It transports messages between the `View` and the `Model`, and vice versa.
 
 On iOS the **View** and the **Controller** are often merged in a unique class: the **UIViewController**. Every class that subclass it has the following duties:
 
-- Calling the *business logic* and bind the results to the view managing the view elements.
-- *Transforming the data* coming from the model layer into a UI friendly format.
+- Calling the `business logic` and bind the results to the view managing the view elements.
+- `Transforming the data` coming from the model layer into a UI friendly format.
 - Navigation logic.
 - Manage the UI state.
 
 This produces single overstuffed and fat view controller classes and it breaks the **Single Responsibility Principle**. 
 
 A good architecture enables the team to easily and safely change code without a ton of risk. Making changes to code in a codebase that's not architected well is expensive and risky. The two primary problems that good architecture practices solve are **slow team velocity** and **fragile code quality**. Additionally, good architecture practices can help you prevent rigid software.
-A good app architecture enables the team to deliver features and bug fixes faster without compromising on *quality*. On the other hand, a less-than-ideal architecture slows the team down and makes your codebase very difficult to change without breaking existing functionality.
-The tipical issues that a team encounters in a *slow velocity and fragile code quality* are:
+A good app architecture enables the team to deliver features and bug fixes faster without compromising on `quality`. On the other hand, a less-than-ideal architecture slows the team down and makes your codebase very difficult to change without breaking existing functionality.
+The tipical issues that a team encounters in a `slow velocity and fragile code quality` are:
 
 - App's codebase sometimes causes regressions.
 - App exhibits fragile behavior when running.
@@ -43,7 +43,7 @@ The tipical issues that a team encounters in a *slow velocity and fragile code q
 - Teammates step on each other's toes.
 - Codebase is hard to unit test.
 
-Each of these problems can be caused by two fundamental root causes: **highly interdependent code** and **large types**. In fact the more the team tightly couples parts of the codebase, the more likely something unexpectedly breaks when making code changes. Moreover **large types** such as *classes*, *structs*, *protocols* and *enums* that have long public interfaces and very long implementations, often hundreds or even thousands of lines of code, will cause to the team many problems and it will effect the code's quality. So breaking large types into **smaller types** is a great way to improve the codebase's architecture.
+Each of these problems can be caused by two fundamental root causes: **highly interdependent code** and **large types**. In fact the more the team tightly couples parts of the codebase, the more likely something unexpectedly breaks when making code changes. Moreover **large types** such as `classes`, `structs`, `protocols` and `enums` that have long public interfaces and very long implementations, often hundreds or even thousands of lines of code, will cause to the team many problems and it will effect the code's quality. So breaking large types into **smaller types** is a great way to improve the codebase's architecture.
 
 ### Codebase Readability
 
@@ -54,19 +54,19 @@ This means that, the more your objects directly depend on each other and the mor
 
 ### Codebase Regressions
 
-Sometimes changing the project's codebase causes regressions. The main architectural cause for this problem is *highly interdependent code*. it is difficult to notice easily the effects of code changes when the codebase is highly interdependent. 
-This situation really slows the team down because any time any feature is built or any bug is fixed there's a chance for something to go wrong. If something does go wrong, it might be not immediate to figure out the root cause. In a really fragile codebase, the *change-break-fix cycle* can go out of control and the team can end up spending more time fixing issues than improving the app. This is not just a team velocity problem, it is especially a *code quality problem*. The chances of introducing a bug is much higher when the connections between code are hard to see and understand. Code that's hard to understand leads to code that easily breaks when changed.
+Sometimes changing the project's codebase causes regressions. The main architectural cause for this problem is `highly interdependent code`. it is difficult to notice easily the effects of code changes when the codebase is highly interdependent. 
+This situation really slows the team down because any time any feature is built or any bug is fixed there's a chance for something to go wrong. If something does go wrong, it might be not immediate to figure out the root cause. In a really fragile codebase, the `change-break-fix cycle` can go out of control and the team can end up spending more time fixing issues than improving the app. This is not just a team velocity problem, it is especially a `code quality problem`. The chances of introducing a bug is much higher when the connections between code are hard to see and understand. Code that's hard to understand leads to code that easily breaks when changed.
 
 Ideally, a team menbers should be able to easily reason about how the current file he/she is editing is connected to the rest of the codebase. The best way to do this is to **limit object dependencies** and to make the required dependencies obvious and visible.
 
 ### Fragile Behavior When Running
 
-*Multi- core programming* contribute to the complexities involved in building iOS apps. Consequently, apps are susceptible to problems that are hard to diagnose such as race conditions and state inconsistency. For example, the App might have crashes due to a race condition associated with some mutable state. This kind of crash can take days to diagnose and fix. Good architecture patterns attempt to address these kinds of issues by designing constraints that help teams avoid these common issues.
+`Multi-core programming` contribute to the complexities involved in building iOS apps. Consequently, apps are susceptible to problems that are hard to diagnose such as race conditions and state inconsistency. For example, the App might have crashes due to a race condition associated with some mutable state. This kind of crash can take days to diagnose and fix. Good architecture patterns attempt to address these kinds of issues by designing constraints that help teams avoid these common issues.
 
 ### Code Hard to Re-Use
 
 The structure of a codebase determines how much code the team can re-use. The structure also determines how easily the team add new feature to existing code.
-*Large types* can prevent your code from being reusable. In fact, a huge and fat class is unlikely to be reusable because the team might only need part of the class and the part the team need might be tightly coupled with the rest of the class, making the part impossible to use without the rest of the class. Types that are smaller and that have less responsibility are more likely to be reusable.
+`Large types` can prevent your code from being reusable. In fact, a huge and fat class is unlikely to be reusable because the team might only need part of the class and the part the team need might be tightly coupled with the rest of the class, making the part impossible to use without the rest of the class. Types that are smaller and that have less responsibility are more likely to be reusable.
 
 By the way reusability is not just about being able to re-use code. It's also about being able to move code around when making changes to the app. The more reusable everything is, the easier it is to shuffle code around without needing to do risky refactors.
 
@@ -78,18 +78,49 @@ To summarize, the team will be able to build features much faster if the app's a
 
 ### Hard to Unit Test
 
-When a codebase is made up of parts that are tightly coupled together  is notoriously hard to unit test. This makes the different parts impossible to isolate during test. For instance using the *MVC* pattern the problem might not be evident until it comes to the unit testing. Since your view controller is tightly coupled with the view, it becomes difficult to test because you have to be very creative in mocking views and their life cycle, while writing the view controller’s code in such a way, that your business logic is separated as much as possible from the view layout code.
+When a codebase is made up of parts that are tightly coupled together  is notoriously hard to unit test. This makes the different parts impossible to isolate during test. For instance using the **MVC** pattern the problem might not be evident until it comes to the unit testing. Since your view controller is tightly coupled with the view, it becomes difficult to test because you have to be very creative in mocking views and their life cycle, while writing the view controller’s code in such a way, that your business logic is separated as much as possible from the view layout code.
 
 ### Chosen Pattern: VIPER
 
-To avoid all the problems previously discussed, the iOS team decided to refactor the UI layer using the [VIPER pattern](https://github.com/wireapp/ios-architecture/blob/wire-ui-architecture-refactoring/UI-architecture-refactoring/UI_Refactoring.md)
+As we mentioned previously we use architectures in software development to organize our code into different layers, in order to make it cleaner, easier to test, to maintain and to write less boilerplate code.
+
+The word [VIPER](https://github.com/wireapp/ios-architecture/blob/wire-ui-architecture-refactoring/UI-architecture-refactoring/UI_Refactoring.md) is a backronym for **View**, **Interactor**, **Presenter**, **Entity**, and **Routing** and it’s basically an implementation of a [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) for iOS applications, which is based on the [Single Responsibility Principle](https://medium.com/@severinperez/writing-flexible-code-with-the-single-responsibility-principle-b71c4f3f883f), in fact **Clean Architecture** divides an app’s logical structure into distinct layers of responsibility. This makes it easier to isolate dependencies and to test the interactions at the boundaries between layers.
+
+- **View** It's the `interface layer`, which means `UIKit` files, mostly `UIViewController` subclasses and all the other stuff. `Views` don't do anything that's related to business logic, they're just a presentation and event forwarding layer which is used by the presenter. SO its sole responsibility is to display what the Presenter tells it to, and handle the user interactions with the screen. When the user triggers any event that requires processing, the `View` simply delegates it to the Presenter and awaits for a response telling it what should be displayed next.
+
+- **Interactor** It is responsible for retrieving data from the model layer, and its implementation is completely independent of the user interface. 
+So the `Interactor` contains all the business logic related to the entities and should be completely independent of the user interface.
+Once the `Interactor` finishes running some task, it notifies the `Presenter` about the result obtained.
+It's important to remember that data managers like network and database are not part of **VIPER** and they are treated as separate components (services), coming outside from the VIPER module. 
+The `Interactor` can prepare or transform data, that's coming from the service layer, but we will discuss more in detail this statement.
+It is foundamental to highlight that the `Interactor` doesn’t know the `View`, so it has no idea how the data should be prepared for the view, that's the role of the `Presenter`.
+
+- **Presenter** It's an UIKit independent class that gathers input from user interactions and directs data between the `View` and `Interactor`.
+So basically it receives the data structures coming from the `Interactor`, applies view logic over this data to prepare the content, and finally tells the `View` what to display.
+It's the core class of a **VIPER** module, because it communicates with the `Interactor` and calls the `Router` for `wire-framing`. 
+It's the only class that communicates with almost all the other components. That's the unique job of the `Presenter`, so it should not know anything about `UIKit` or low level `data models`.
+
+- **Entity** It contains basic model objects used by the `Interactor`.
+
+- **Router** It contains the `navigation logic` of the application using `UIKit` classes. It receives input commands from the `Presenter` to say what screen it should route to. Also, the `Router` should be responsible for passing data from one screen to the other.
+
+
+The iOS team decided to use **VIPER** cause it offers a lot of benefits if used in the right way and for the right project:
+- Well suited for large and complex projects that grow over time by adding new features (Scalable Projects): Allow us to keep the project maintainable for the long term.
+- Simple and easy to understand code by other developers of the team. Makes identifying bugs and errors easy, since each layer has its own responsibility (Single Responsibility Principle): depending on the error, we can know which layer is responsible for that error.
+- Modular and well-organized project.
+- Adding or removing features is easy.
+- Reduce the load on controllers, which makes them light-weight.
+- UI logic is separated from Business logic.
+- Makes it easy to test and maintain the code.
+- Composition of the project is based on use cases.
 
 ## Refactoring Approcches: Top-Dowm and Bottom-Up
 
 The **top-down** and **bottom-up** models are information processing and knowledge management strategies, mainly concerning software.
 In general, they are methodologies used to analyze problematic situations and build hypotheses suitable for their solution: the concept of problematic situation can be traced back to the most varied areas, such as the development of a computer program, the resolution of a mathematical problem and so on.
 
-In the **top-down** model, a *general view of the system is formulated*, it means that its main purpose is described without going into detail about its parts. Each part of the system is subsequently *refined* (using *decomposition*, *specialization* and *specification*) adding more details to the initial design. Each new part thus obtained can then be refined again, specifying further details, as long as the complete specification is sufficiently detailed to validate the model.
+In the **top-down** model, a `general view of the system is formulated`, it means that its main purpose is described without going into detail about its parts. Each part of the system is subsequently `refined` (using `decomposition`, `specialization` and `specification`) adding more details to the initial design. Each new part thus obtained can then be refined again, specifying further details, as long as the complete specification is sufficiently detailed to validate the model.
 So **top-down** is when you take the whole problem and break it down into smaller and smaller problems until you get to the bottom where you have lots of actual implementation details.
 This means that in the **top-down** model, we start from the goal and from it the strategy is derived. Once the strategy has been specified, **it is essential to identify the necessary resources, specify the available ones and identify the missing resources, and propose each missing resource as a sub-objective or as a sub-problem in which each sub-objective requires a sub-strategy related to it**.
 
@@ -102,8 +133,8 @@ In the software development process, **top-down** and **bottom-up** approaches p
 
 ### Top-Dowm and Bottom-Up for wire-ios Refactoring
 
-If we think to the structure of the UI layes of the iOS App we could image it as a **screen tree**. Every screen is represented by a **leaf**. The composition of the leafs and the routing from one leaf to another builds the entire UI layer. In addition, every leaf has is own *cardinality* that determines the numeber of paths that a user can run across to reach that particular screen. 
-Also there are leafs the forms the *core of the application* such as the *login*, *registration flow*, *tabbar*, *search*, *conversation list*, *conversation* and other leafs that are more external in the tree such as *settings*, *create group*, *user profile*, *contact profile*, *device list* and so on.
+If we think to the structure of the UI layes of the iOS App we could image it as a **screen tree**. Every screen is represented by a **leaf**. The composition of the leafs and the routing from one leaf to another builds the entire UI layer. In addition, every leaf has is own `cardinality` that determines the numeber of paths that a user can run across to reach that particular screen. 
+Also there are leafs the forms the `core of the application` such as the `login`, `registration flow`, `tabbar`, `search`, `conversation list`, `conversation` and other leafs that are more external in the tree such as `settings`, `create group`, `user profile`, `contact profile`, `device list` and so on.
 
 At this point we have two different ways to approch the **wire-ios** refactoring:
 
