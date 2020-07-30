@@ -1,9 +1,14 @@
 # RFC iOS UI Layer Refactoring
 
+| **Maintainer**        | Marco Maddalena             |
+| --------------------- | --------------------------- | 
+| **Status**            | Open till 07.08.2020 - OPEN |
+
 ## Table of Contents
 
 - [RFC iOS UI Layer Refactoring](#rfc-ios-ui-layer-refactoring)
   - [Table of Contents](#table-of-contents)
+  - [Goal of the RFC](#goal-of-the-rfc)
   - [Introduction](#introduction)
     - [Codebase Readability](#codebase-readability)
     - [Codebase Regressions](#codebase-regressions)
@@ -16,6 +21,15 @@
     - [Top-Dowm and Bottom-Up for wire-ios Refactoring](#top-dowm-and-bottom-up-for-wire-ios-refactoring)
   - [Refactoring Part 1: AppRoot Routing](#refactoring-part-1-approot-routing)
 
+## Goal of the RFC
+
+The goals of the RFC are the following:
+
+  - Highlight and analyze the technical debts and weaknesses of the **wire-ios** project.
+  - Propose refactoring approches to follow during the process.
+  - Propose a technical solution that could be applyed to all the modules of the **wire-ios** project (**VIPER**)
+  - Propose a technical solution for the first phase of the refactoring: **APP Routing**.
+ 
 ## Introduction
 
 At the top of the hierarchy in the [dependencies graph](https://github.com/wireapp/wire-ios/wiki) of the iOS application there is the **wire-ios** layer, which represents the user interface layer of the app. At the time when the UI layer started to be implemented the **Model-View-Controller** pattern (also known as `Massive-View-Controller`) was a widely used design pattern for architecting software applications. In fact Cocoa applications were centered around **MVC** and many of Apple's frameworks are impregnated by the pattern.
