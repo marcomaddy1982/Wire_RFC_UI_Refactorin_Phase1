@@ -86,6 +86,8 @@ As we mentioned previously we use architectures in software development to organ
 
 The word [VIPER](https://github.com/wireapp/ios-architecture/blob/wire-ui-architecture-refactoring/UI-architecture-refactoring/UI_Refactoring.md) is a backronym for **View**, **Interactor**, **Presenter**, **Entity**, and **Routing** and it’s basically an implementation of a [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) for iOS applications, which is based on the [Single Responsibility Principle](https://medium.com/@severinperez/writing-flexible-code-with-the-single-responsibility-principle-b71c4f3f883f), in fact **Clean Architecture** divides an app’s logical structure into distinct layers of responsibility. This makes it easier to isolate dependencies and to test the interactions at the boundaries between layers.
 
+![VIPER](images/Viper.png)
+
 - **View** It's the `interface layer`, which means `UIKit` files, mostly `UIViewController` subclasses and all the other stuff. `Views` don't do anything that's related to business logic, they're just a presentation and event forwarding layer which is used by the presenter. SO its sole responsibility is to display what the Presenter tells it to, and handle the user interactions with the screen. When the user triggers any event that requires processing, the `View` simply delegates it to the Presenter and awaits for a response telling it what should be displayed next.
 
 - **Interactor** It is responsible for retrieving data from the model layer, and its implementation is completely independent of the user interface. 
@@ -103,7 +105,6 @@ It's the only class that communicates with almost all the other components. That
 - **Entity** It contains basic model objects used by the `Interactor`.
 
 - **Router** It contains the `navigation logic` of the application using `UIKit` classes. It receives input commands from the `Presenter` to say what screen it should route to. Also, the `Router` should be responsible for passing data from one screen to the other.
-
 
 The iOS team decided to use **VIPER** cause it offers a lot of benefits if used in the right way and for the right project:
 - Well suited for large and complex projects that grow over time by adding new features (Scalable Projects): Allow us to keep the project maintainable for the long term.
